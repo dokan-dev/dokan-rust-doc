@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `C:\Users\appveyor\.cargo\registry\src\github.com-1ecc6299db9ec823\winapi-0.3.8\src\um\winreg.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>winreg.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../winapi/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `C:\Users\appveyor\.cargo\registry\src\github.com-1ecc6299db9ec823\winapi-0.3.9\src\um\winreg.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>winreg.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../winapi/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -488,6 +491,200 @@
 <span id="488">488</span>
 <span id="489">489</span>
 <span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Licensed under the Apache License, Version 2.0</span>
 <span class="comment">// &lt;LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
@@ -499,7 +696,16 @@
     <span class="ident">BOOL</span>, <span class="ident">BYTE</span>, <span class="ident">DWORD</span>, <span class="ident">HKEY</span>, <span class="ident">LPBYTE</span>, <span class="ident">LPCVOID</span>, <span class="ident">LPDWORD</span>, <span class="ident">PFILETIME</span>, <span class="ident">PHKEY</span>, <span class="ident">ULONG</span>
 };
 <span class="kw">use</span> <span class="ident">um</span>::<span class="ident">minwinbase</span>::<span class="ident">LPSECURITY_ATTRIBUTES</span>;
-<span class="kw">use</span> <span class="ident">um</span>::<span class="ident">winnt</span>::{<span class="ident">ACCESS_MASK</span>, <span class="ident">HANDLE</span>, <span class="ident">LONG</span>, <span class="ident">LPCSTR</span>, <span class="ident">LPCWSTR</span>, <span class="ident">LPSTR</span>, <span class="ident">LPWSTR</span>, <span class="ident">PVOID</span>};
+<span class="kw">use</span> <span class="ident">um</span>::<span class="ident">reason</span>::{
+    <span class="ident">SHTDN_REASON_FLAG_PLANNED</span>, <span class="ident">SHTDN_REASON_LEGACY_API</span>, <span class="ident">SHTDN_REASON_MAJOR_HARDWARE</span>,
+    <span class="ident">SHTDN_REASON_MAJOR_OTHER</span>, <span class="ident">SHTDN_REASON_MAJOR_SOFTWARE</span>, <span class="ident">SHTDN_REASON_MAJOR_SYSTEM</span>,
+    <span class="ident">SHTDN_REASON_MINOR_HUNG</span>, <span class="ident">SHTDN_REASON_MINOR_INSTALLATION</span>, <span class="ident">SHTDN_REASON_MINOR_OTHER</span>,
+    <span class="ident">SHTDN_REASON_MINOR_RECONFIG</span>, <span class="ident">SHTDN_REASON_MINOR_UNSTABLE</span>, <span class="ident">SHTDN_REASON_UNKNOWN</span>,
+};
+<span class="kw">use</span> <span class="ident">um</span>::<span class="ident">winnt</span>::{
+    <span class="ident">ACCESS_MASK</span>, <span class="ident">BOOLEAN</span>, <span class="ident">HANDLE</span>, <span class="ident">LONG</span>, <span class="ident">LPCSTR</span>, <span class="ident">LPCWSTR</span>, <span class="ident">LPSTR</span>, <span class="ident">LPWSTR</span>, <span class="ident">PBOOLEAN</span>, <span class="ident">PLONG</span>,
+    <span class="ident">PSECURITY_DESCRIPTOR</span>, <span class="ident">PVOID</span>, <span class="ident">SECURITY_INFORMATION</span>,
+};
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LSTATUS</span> <span class="op">=</span> <span class="ident">LONG</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RRF_RT_REG_NONE</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000001</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RRF_RT_REG_SZ</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000002</span>;
@@ -518,16 +724,16 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RRF_ZEROONFAILURE</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x20000000</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REG_PROCESS_APPKEY</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000001</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">REGSAM</span> <span class="op">=</span> <span class="ident">ACCESS_MASK</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CLASSES_ROOT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000000i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_USER</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000001i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_LOCAL_MACHINE</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000002i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_USERS</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000003i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_DATA</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000004i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_TEXT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000050i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_NLSTEXT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000060i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_CONFIG</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000005i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_DYN_DATA</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000006i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_USER_LOCAL_SETTINGS</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000007i32</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CLASSES_ROOT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000000i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_USER</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000001i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_LOCAL_MACHINE</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000002i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_USERS</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000003i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_DATA</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000004i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_TEXT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000050i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_PERFORMANCE_NLSTEXT</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000060i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_CONFIG</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000005i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_DYN_DATA</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000006i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKEY_CURRENT_USER_LOCAL_SETTINGS</span>: <span class="ident">HKEY</span> <span class="op">=</span> <span class="number">0x80000007i32</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="kw">as</span> <span class="ident">HKEY</span>;
 <span class="comment">// PROVIDER_KEEPS_VALUE_LENGTH</span>
 <span class="comment">// val_context</span>
 <span class="comment">// PVALUEA</span>
@@ -705,8 +911,18 @@
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">lpValueName</span>: <span class="ident">LPCWSTR</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegEnumKeyA();</span>
-    <span class="comment">// pub fn RegEnumKeyW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegEnumKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">dwIndex</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpName</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">cchName</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegEnumKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">dwIndex</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpName</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">cchName</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegEnumKeyExA</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">dwIndex</span>: <span class="ident">DWORD</span>,
@@ -750,9 +966,22 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegFlushKey</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegGetKeySecurity();</span>
-    <span class="comment">// pub fn RegLoadKeyA();</span>
-    <span class="comment">// pub fn RegLoadKeyW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegGetKeySecurity</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">SecurityInformation</span>: <span class="ident">SECURITY_INFORMATION</span>,
+        <span class="ident">pSecurityDescriptor</span>: <span class="ident">PSECURITY_DESCRIPTOR</span>,
+        <span class="ident">lpcbSecurityDescriptor</span>: <span class="ident">LPDWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCWSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegNotifyChangeKeyValue</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">bWatchSubtree</span>: <span class="ident">BOOL</span>,
@@ -760,8 +989,16 @@
         <span class="ident">hEvent</span>: <span class="ident">HANDLE</span>,
         <span class="ident">fAsynchronous</span>: <span class="ident">BOOL</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegOpenKeyA();</span>
-    <span class="comment">// pub fn RegOpenKeyW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegOpenKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">phkResult</span>: <span class="ident">PHKEY</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegOpenKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">phkResult</span>: <span class="ident">PHKEY</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegOpenKeyExA</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
@@ -822,8 +1059,18 @@
         <span class="ident">lpcbSecurityDescriptor</span>: <span class="ident">LPDWORD</span>,
         <span class="ident">lpftLastWriteTime</span>: <span class="ident">PFILETIME</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegQueryValueA();</span>
-    <span class="comment">// pub fn RegQueryValueW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegQueryValueA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpData</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">lpcbData</span>: <span class="ident">PLONG</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegQueryValueW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpData</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">lpcbData</span>: <span class="ident">PLONG</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegQueryMultipleValuesA</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">val_list</span>: <span class="ident">PVALENTA</span>,
@@ -854,16 +1101,62 @@
         <span class="ident">lpData</span>: <span class="ident">LPBYTE</span>,
         <span class="ident">lpcbData</span>: <span class="ident">LPDWORD</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegReplaceKeyA();</span>
-    <span class="comment">// pub fn RegReplaceKeyW();</span>
-    <span class="comment">// pub fn RegRestoreKeyA();</span>
-    <span class="comment">// pub fn RegRestoreKeyW();</span>
-    <span class="comment">// pub fn RegRenameKey();</span>
-    <span class="comment">// pub fn RegSaveKeyA();</span>
-    <span class="comment">// pub fn RegSaveKeyW();</span>
-    <span class="comment">// pub fn RegSetKeySecurity();</span>
-    <span class="comment">// pub fn RegSetValueA();</span>
-    <span class="comment">// pub fn RegSetValueW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegReplaceKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpNewFile</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpOldFile</span>: <span class="ident">LPCSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegReplaceKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpNewFile</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpOldFile</span>: <span class="ident">LPCWSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegRestoreKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">dwFlags</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegRestoreKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">dwFlags</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegRenameKey</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKeyName</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpNewKeyName</span>: <span class="ident">LPCWSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSaveKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpSecurityAttributes</span>: <span class="ident">LPSECURITY_ATTRIBUTES</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSaveKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpSecurityAttributes</span>: <span class="ident">LPSECURITY_ATTRIBUTES</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSetKeySecurity</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">SecurityInformation</span>: <span class="ident">SECURITY_INFORMATION</span>,
+        <span class="ident">pSecurityDescriptor</span>: <span class="ident">PSECURITY_DESCRIPTOR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSetValueA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">dwType</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpData</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">cbData</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSetValueW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">dwType</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpData</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">cbData</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSetValueExA</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">lpValueName</span>: <span class="ident">LPCSTR</span>,
@@ -880,8 +1173,14 @@
         <span class="ident">lpData</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">BYTE</span>,
         <span class="ident">cbData</span>: <span class="ident">DWORD</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegUnLoadKeyA();</span>
-    <span class="comment">// pub fn RegUnLoadKeyW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegUnLoadKeyA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegUnLoadKeyW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegDeleteKeyValueA</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">lpSubKey</span>: <span class="ident">LPCSTR</span>,
@@ -944,7 +1243,15 @@
         <span class="ident">lpSubKey</span>: <span class="ident">LPCWSTR</span>,
         <span class="ident">hKeyDest</span>: <span class="ident">HKEY</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegLoadMUIStringA();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadMUIStringA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">pszValue</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">pszOutBuf</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">cbOutBuf</span>: <span class="ident">DWORD</span>,
+        <span class="ident">pcbData</span>: <span class="ident">LPDWORD</span>,
+        <span class="ident">Flags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">pszDirectory</span>: <span class="ident">LPCSTR</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadMUIStringW</span>(
         <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
         <span class="ident">pszValue</span>: <span class="ident">LPCWSTR</span>,
@@ -954,10 +1261,34 @@
         <span class="ident">Flags</span>: <span class="ident">DWORD</span>,
         <span class="ident">pszDirectory</span>: <span class="ident">LPCWSTR</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
-    <span class="comment">// pub fn RegLoadAppKeyA();</span>
-    <span class="comment">// pub fn RegLoadAppKeyW();</span>
-    <span class="comment">// pub fn InitiateSystemShutdownA();</span>
-    <span class="comment">// pub fn InitiateSystemShutdownW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadAppKeyA</span>(
+        <span class="ident">lpFile</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">phkResult</span>: <span class="ident">PHKEY</span>,
+        <span class="ident">samDesired</span>: <span class="ident">REGSAM</span>,
+        <span class="ident">dwOptions</span>: <span class="ident">DWORD</span>,
+        <span class="ident">Reserved</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegLoadAppKeyW</span>(
+        <span class="ident">lpFile</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">phkResult</span>: <span class="ident">PHKEY</span>,
+        <span class="ident">samDesired</span>: <span class="ident">REGSAM</span>,
+        <span class="ident">dwOptions</span>: <span class="ident">DWORD</span>,
+        <span class="ident">Reserved</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateSystemShutdownA</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">dwTimeout</span>: <span class="ident">DWORD</span>,
+        <span class="ident">bForceAppsClosed</span>: <span class="ident">BOOL</span>,
+        <span class="ident">bRebootAfterShutdown</span>: <span class="ident">BOOL</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateSystemShutdownW</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">dwTimeout</span>: <span class="ident">DWORD</span>,
+        <span class="ident">bForceAppsClosed</span>: <span class="ident">BOOL</span>,
+        <span class="ident">bRebootAfterShutdown</span>: <span class="ident">BOOL</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">AbortSystemShutdownA</span>(
         <span class="ident">lpMachineName</span>: <span class="ident">LPSTR</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
@@ -965,19 +1296,80 @@
         <span class="ident">lpMachineName</span>: <span class="ident">LPWSTR</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
 }
-<span class="comment">// REASON_*</span>
-<span class="comment">// MAX_SHUTDOWN_TIMEOUT</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_SWINSTALL</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_SOFTWARE</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_INSTALLATION</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_HWINSTALL</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_HARDWARE</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_INSTALLATION</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_SERVICEHANG</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_SOFTWARE</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_HUNG</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_UNSTABLE</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_SYSTEM</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_UNSTABLE</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_SWHWRECONF</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_SOFTWARE</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_RECONFIG</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_OTHER</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_MAJOR_OTHER</span> <span class="op">|</span> <span class="ident">SHTDN_REASON_MINOR_OTHER</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_UNKNOWN</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_UNKNOWN</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_LEGACY_API</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_LEGACY_API</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REASON_PLANNED_FLAG</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="ident">SHTDN_REASON_FLAG_PLANNED</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_SHUTDOWN_TIMEOUT</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">10</span> <span class="op">*</span> <span class="number">365</span> <span class="op">*</span> <span class="number">24</span> <span class="op">*</span> <span class="number">60</span> <span class="op">*</span> <span class="number">60</span>;
 <span class="kw">extern</span> <span class="string">&quot;system&quot;</span> {
-    <span class="comment">// pub fn InitiateSystemShutdownExA();</span>
-    <span class="comment">// pub fn InitiateSystemShutdownExW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateSystemShutdownExA</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">dwTimeout</span>: <span class="ident">DWORD</span>,
+        <span class="ident">bForceAppsClosed</span>: <span class="ident">BOOL</span>,
+        <span class="ident">bRebootAfterShutdown</span>: <span class="ident">BOOL</span>,
+        <span class="ident">dwReason</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateSystemShutdownExW</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">dwTimeout</span>: <span class="ident">DWORD</span>,
+        <span class="ident">bForceAppsClosed</span>: <span class="ident">BOOL</span>,
+        <span class="ident">bRebootAfterShutdown</span>: <span class="ident">BOOL</span>,
+        <span class="ident">dwReason</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
 }
-<span class="comment">// SHUTDOWN_*</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_FORCE_OTHERS</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000001</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_FORCE_SELF</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_RESTART</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_POWEROFF</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000008</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_NOREBOOT</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_GRACE_OVERRIDE</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000020</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_INSTALL_UPDATES</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000040</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_RESTARTAPPS</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000080</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_SKIP_SVC_PRESHUTDOWN</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_HYBRID</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000200</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_RESTART_BOOTOPTIONS</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000400</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_SOFT_REBOOT</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000800</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_MOBILE_UI</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00001000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SHUTDOWN_ARSO</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00002000</span>;
 <span class="kw">extern</span> <span class="string">&quot;system&quot;</span> {
-    <span class="comment">// pub fn InitiateShutdownA();</span>
-    <span class="comment">// pub fn InitiateShutdownW();</span>
-    <span class="comment">// pub fn CheckForHiberboot();</span>
-    <span class="comment">// pub fn RegSaveKeyExA();</span>
-    <span class="comment">// pub fn RegSaveKeyExW();</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateShutdownA</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPSTR</span>,
+        <span class="ident">dwGracePeriod</span>: <span class="ident">DWORD</span>,
+        <span class="ident">dwShutdownFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">dwReason</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DWORD</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">InitiateShutdownW</span>(
+        <span class="ident">lpMachineName</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">lpMessage</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">dwGracePeriod</span>: <span class="ident">DWORD</span>,
+        <span class="ident">dwShutdownFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">dwReason</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DWORD</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CheckForHiberboot</span>(
+        <span class="ident">pHiberboot</span>: <span class="ident">PBOOLEAN</span>,
+        <span class="ident">bClearFlag</span>: <span class="ident">BOOLEAN</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DWORD</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSaveKeyExA</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCSTR</span>,
+        <span class="ident">lpSecurityAttributes</span>: <span class="ident">LPSECURITY_ATTRIBUTES</span>,
+        <span class="ident">Flags</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegSaveKeyExW</span>(
+        <span class="ident">hKey</span>: <span class="ident">HKEY</span>,
+        <span class="ident">lpFile</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpSecurityAttributes</span>: <span class="ident">LPSECURITY_ATTRIBUTES</span>,
+        <span class="ident">Flags</span>: <span class="ident">DWORD</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LSTATUS</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "winapi";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="winapi" data-search-js="../../../search-index.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

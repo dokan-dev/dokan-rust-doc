@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `C:\Users\appveyor\.cargo\registry\src\github.com-1ecc6299db9ec823\winapi-0.3.8\src\um\winbase.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>winbase.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../winapi/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `C:\Users\appveyor\.cargo\registry\src\github.com-1ecc6299db9ec823\winapi-0.3.9\src\um\winbase.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>winbase.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../winapi/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2823,6 +2826,35 @@
 <span id="2823">2823</span>
 <span id="2824">2824</span>
 <span id="2825">2825</span>
+<span id="2826">2826</span>
+<span id="2827">2827</span>
+<span id="2828">2828</span>
+<span id="2829">2829</span>
+<span id="2830">2830</span>
+<span id="2831">2831</span>
+<span id="2832">2832</span>
+<span id="2833">2833</span>
+<span id="2834">2834</span>
+<span id="2835">2835</span>
+<span id="2836">2836</span>
+<span id="2837">2837</span>
+<span id="2838">2838</span>
+<span id="2839">2839</span>
+<span id="2840">2840</span>
+<span id="2841">2841</span>
+<span id="2842">2842</span>
+<span id="2843">2843</span>
+<span id="2844">2844</span>
+<span id="2845">2845</span>
+<span id="2846">2846</span>
+<span id="2847">2847</span>
+<span id="2848">2848</span>
+<span id="2849">2849</span>
+<span id="2850">2850</span>
+<span id="2851">2851</span>
+<span id="2852">2852</span>
+<span id="2853">2853</span>
+<span id="2854">2854</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Licensed under the Apache License, Version 2.0</span>
 <span class="comment">// &lt;LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
@@ -2852,7 +2884,8 @@
     <span class="ident">LPOVERLAPPED</span>, <span class="ident">LPOVERLAPPED_COMPLETION_ROUTINE</span>, <span class="ident">LPSECURITY_ATTRIBUTES</span>, <span class="ident">PREASON_CONTEXT</span>,
 };
 <span class="kw">use</span> <span class="ident">um</span>::<span class="ident">processthreadsapi</span>::{
-    <span class="ident">LPPROC_THREAD_ATTRIBUTE_LIST</span>, <span class="ident">LPSTARTUPINFOA</span>, <span class="ident">STARTUPINFOA</span>, <span class="ident">STARTUPINFOW</span>,
+    <span class="ident">LPPROCESS_INFORMATION</span>, <span class="ident">LPPROC_THREAD_ATTRIBUTE_LIST</span>, <span class="ident">LPSTARTUPINFOA</span>, <span class="ident">LPSTARTUPINFOW</span>,
+    <span class="ident">STARTUPINFOA</span>, <span class="ident">STARTUPINFOW</span>,
 };
 <span class="kw">use</span> <span class="ident">um</span>::<span class="ident">winnt</span>::{
     <span class="ident">BOOLEAN</span>, <span class="ident">CHAR</span>, <span class="ident">DWORDLONG</span>, <span class="ident">EXECUTION_STATE</span>, <span class="ident">FILE_ID_128</span>, <span class="ident">HANDLE</span>, <span class="ident">HRESULT</span>, <span class="ident">INT</span>, <span class="ident">LANGID</span>,
@@ -5132,9 +5165,37 @@
         <span class="ident">pdwProfileLength</span>: <span class="ident">LPDWORD</span>,
         <span class="ident">pQuotaLimits</span>: <span class="ident">PQUOTA_LIMITS</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
-    <span class="comment">// pub fn CreateProcessWithLogonW();</span>
-    <span class="comment">// pub fn CreateProcessWithTokenW();</span>
-    <span class="comment">// pub fn IsTokenUntrusted();</span>
+}
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOGON_WITH_PROFILE</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000001</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOGON_NETCREDENTIALS_ONLY</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x00000002</span>;
+<span class="kw">extern</span> <span class="string">&quot;system&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CreateProcessWithLogonW</span>(
+        <span class="ident">lpUsername</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpDomain</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpPassword</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">dwLogonFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpApplicationName</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpCommandLine</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">dwCreationFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpEnvironment</span>: <span class="ident">LPVOID</span>,
+        <span class="ident">lpCurrentDirectory</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpStartupInfo</span>: <span class="ident">LPSTARTUPINFOW</span>,
+        <span class="ident">lpProcessInformation</span>: <span class="ident">LPPROCESS_INFORMATION</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CreateProcessWithTokenW</span>(
+        <span class="ident">hToken</span>: <span class="ident">HANDLE</span>,
+        <span class="ident">dwLogonFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpApplicationName</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpCommandLine</span>: <span class="ident">LPWSTR</span>,
+        <span class="ident">dwCreationFlags</span>: <span class="ident">DWORD</span>,
+        <span class="ident">lpEnvironment</span>: <span class="ident">LPVOID</span>,
+        <span class="ident">lpCurrentDirectory</span>: <span class="ident">LPCWSTR</span>,
+        <span class="ident">lpStartupInfo</span>: <span class="ident">LPSTARTUPINFOW</span>,
+        <span class="ident">lpProcessInformation</span>: <span class="ident">LPPROCESS_INFORMATION</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">IsTokenUntrusted</span>(
+        <span class="ident">TokenHandle</span>: <span class="ident">HANDLE</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">RegisterWaitForSingleObject</span>(
         <span class="ident">phNewWaitObject</span>: <span class="ident">PHANDLE</span>,
         <span class="ident">hObject</span>: <span class="ident">HANDLE</span>,
@@ -5650,4 +5711,5 @@
     <span class="comment">// intrinsic InterlockedXor</span>
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "winapi";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="winapi" data-search-js="../../../search-index.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
